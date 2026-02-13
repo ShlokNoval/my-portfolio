@@ -1,0 +1,10 @@
+Flask==3.1.2
+
+
+
+#Service ID: service_ey6jkd4
+
+
+#Template ID: template_c2imz39
+
+#Public Key: 8UjPM87z8yYEmYYsq

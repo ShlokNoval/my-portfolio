@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Shlok Ravi Noval - AI/ML Developer and Computer Science Engineering student specializing in Machine Learning, GenAI, and intelligent system development.">
+
+
+    <meta name="keywords"
+        content="Shlok Ravi Noval, AIML Developer, Machine Learning, Artificial Intelligence, GenAI, Python Developer, Flutter Developer, Portfolio">
+
+    <meta name="author" content="Shlok Ravi Noval">
+
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (LinkedIn, WhatsApp preview) -->
+    <meta property="og:title" content="Shlok Ravi Noval | AI/ML Developer Portfolio">
+    <meta property="og:description"
+        content="AI/ML Developer building intelligent systems for real-world impact. Explore projects, research, and collaborations.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='assets/profile.png') }}">
+    <meta property="og:url" content="https://shloknoval.github.io/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shlok Ravi Noval | AI/ML Developer">
+    <meta name="twitter:description" content="AI/ML Developer building intelligent systems for real-world impact.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='assets/profile.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/favicon.png') }}">
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Shlok Ravi Noval",
+        "url": "https://shloknoval.github.io/",
+        "sameAs": [
+            "https://github.com/ShlokNoval",
+            "https://www.linkedin.com/in/shlok-noval",
+            "https://www.instagram.com/shlok_noval"
+        ],
+        "jobTitle": "Computer Science Engineering Student",
+        "alumniOf": "Jawaharlal Nehru Engineering College, MGM University"
+        }
+    </script>
+
+    <title>Shlok Ravi Noval | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ CSS LINK (THIS WAS MISSING) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scrollBar"></div>
+    </div>
+
+    <!-- DNA BACKGROUND -->
+    <canvas id="dna-canvas"></canvas>
+
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">SRN</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-image">
+                <img src="{{ url_for('static', filename='assets/profile.png') }}" alt="Shlok Ravi Noval">
+            </div>
+            <div class="hero-content">
+
+                <p class="subtitle">CS ENGINEERING STUDENT | AIML Developer</p>
+                <h1>
+                    Hi! I am <span>Shlok Ravi Noval</span>
+                </h1>
+
+                <p class="tagline">
+                    <span id="typing-tagline"></span>
+                    <span class="cursor">|</span>
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a href="https://shloknoval.github.io/Resume/resume.pdf" target="_blank" download
+                        class="btn primary">
+                        Download Resume (PDF)
+                    </a>
+
+
+                    <div class="social-links">
+
+                        <a href="https://github.com/ShlokNoval" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/shlok-noval" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+
+                        <a href="https://www.instagram.com/shlok_noval?igsh=MTZja3I4b2NpOTlmdg%3D%3D&utm_source=qr"
+                            target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+
+                        <a href="mailto:shloktechnical@gmail.com" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+
+                        <a href="tel:+919588621416" aria-label="Phone">
+                            <i class="fas fa-phone"></i>
+                        </a>
+
+                    </div>
+
+
+                </div>
+            </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about-section reveal">
+
+        <h2 class="reveal-item">About <span>Me</span></h2>
+
+        <p class="about-text reveal-item">
+            A Passionate Computer Science Engineering student at JNEC, MGM University,
+            currently studying in 3rd Year with Minors in Artificial Intelligence & Machine Learning.
+        </p>
+    </section>
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="education-section reveal">
+        <h2 class="reveal-item">Education</h2>
+
+        <div class="timeline reveal-item">
+
+            <div class="timeline-item ">
+                <span class="dot"></span>
+                <div class="timeline-card">
+                    <h3>B.Tech – Computer Science Engineering</h3>
+                    <p class="institute">Jawaharlal Nehru Engineering College, MGM University</p>
+                    <p class="duration">2023 – 2027</p>
+                    <p class="score">CGPA: 9.10</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="dot"></span>
+                <div class="timeline-card">
+                    <h3>HSC – Higher Secondary</h3>
+                    <p class="institute">Deogiri College</p>
+                    <p class="duration">2021 – 2023</p>
+                    <p class="score">11th: 92.5% · 12th: 60% (CS: 90%)</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="dot"></span>
+                <div class="timeline-card">
+                    <h3>CBSE – Secondary School</h3>
+                    <p class="institute">Podar International School</p>
+                    <p class="duration">2016 – 2021</p>
+                    <p class="score">10th: 89.80%</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="experience-section reveal">
+        <h2 class="reveal-item">Experience</h2>
+
+        <div class="experience-cards reveal-item">
+
+            <!-- IIT HYDERABAD -->
+            <div class="experience-card">
+                <h3>Machine Learning Research Intern</h3>
+                <p class="company">IIT Hyderabad · <span>On-site</span></p>
+                <p class="duration">June 2025 – August 2025</p>
+
+                <ul>
+                    <li>2D particle tracker using MATLAB</li>
+                    <li>SPINODE: Neural SDE using Python & CUDA</li>
+                    <li>Neural ODE integration in stochastic physics-informed models</li>
+                </ul>
+
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>MATLAB</span>
+                    <span>CUDA</span>
+                    <span>Neural ODE</span>
+                </div>
+            </div>
+
+            <!-- COGNIFYZ -->
+            <div class="experience-card">
+                <h3>Web Developer Intern</h3>
+                <p class="company">Cognifyz Technologies · <span>Remote</span></p>
+                <p class="duration">Feb 2025 – March 2025</p>
+
+                <ul>
+                    <li>Built responsive website using modern frontend technologies</li>
+                </ul>
+
+                <div class="tech-stack">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>Java</span>
+                    <span>Bulma</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="skills-section reveal">
+        <h2 class="reveal-item">Skills</h2>
+
+        <div class="skills-grid reveal-item">
+
+            <div class="skill-card">
+                <h3>Languages</h3>
+                <div class="skill-pills">
+                    <span>C++</span>
+                    <span>C</span>
+                    <span>Python</span>
+                    <span>Java</span>
+                    <span>Dart (Flutter)</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>Frameworks</h3>
+                <div class="skill-pills">
+                    <span>Flutter</span>
+                    <span>Streamlit</span>
+                    <span>Qt Creator</span>
+                    <span>Arduino</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>AI / ML / GenAI</h3>
+                <div class="skill-pills">
+                    <span>NLP</span>
+                    <span>Sentiment Analysis</span>
+                    <span>OpenCV</span>
+                    <span>LLaMA 3</span>
+                    <span>Mistral</span>
+                    <span>Ollama</span>
+                    <span>LangChain</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>Cloud & APIs</h3>
+                <div class="skill-pills">
+                    <span>Google Cloud</span>
+                    <span>Maps API</span>
+                    <span>OAuth</span>
+                    <span>Postman</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>Web & UI</h3>
+                <div class="skill-pills">
+                    <span>HTML5</span>
+                    <span>CSS3</span>
+                    <span>UI/UX Fundamentals</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>Tools</h3>
+                <div class="skill-pills">
+                    <span>GitHub</span>
+                    <span>VS Code</span>
+                    <span>Android Studio</span>
+                    <span>MATLAB</span>
+                    <span>Ubuntu</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>Soft Skills</h3>
+                <div class="skill-pills">
+                    <span>Leadership</span>
+                    <span>Communication</span>
+                    <span>Teamwork</span>
+                    <span>Hackathon Ownership</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="projects-section reveal">
+        <h2 class="reveal-item">Projects</h2>
+        <p class="projects-subtitle reveal-item">
+            A selection of projects showcasing AI/ML, full-stack, and hardware expertise.
+        </p>
+
+        <div class="projects-grid reveal-item">
+
+            <!-- FLAGSHIP PROJECT -->
+            <div class="project-card flagship">
+                <span class="flagship-badge">★ FLAGSHIP</span>
+                <h3>Annada – Farmers Assistant</h3>
+                <p class="project-desc">
+                    Multilingual Android application to assist farmers with AI chatbot,
+                    fertilizer calculator, government schemes, and live weather alerts.
+                </p>
+
+                <div class="tech-stack">
+                    <span>Flutter</span>
+                    <span>Gemini APIs</span>
+                    <span>OAuth</span>
+                    <span>OpenWeather</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>AI-Powered Fake Info Detector</h3>
+                <p class="project-desc">
+                    Misinformation detection tool for PIBs & government agencies using NLP
+                    and sentiment analysis.
+                </p>
+
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>Streamlit</span>
+                    <span>Mistral</span>
+                    <span>Ollama</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>2D Particle Tracker</h3>
+                <p class="project-desc">
+                    Nanometer-level displacement tracking with GUI for research applications.
+                </p>
+
+                <div class="tech-stack">
+                    <span>MATLAB</span>
+                    <span>Image Processing</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Startup Idea Validator</h3>
+                <p class="project-desc">
+                    AI-powered market analysis platform generating SWOT, competitors,
+                    and budget insights.
+                </p>
+
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>Flask</span>
+                    <span>OpenAI API</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Student Test Application</h3>
+                <p class="project-desc">
+                    MCQ & True/False quiz system with leaderboard and ranking logic.
+                </p>
+
+                <div class="tech-stack">
+                    <span>C++</span>
+                    <span>Qt Creator</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Paper Shredding Machine</h3>
+                <p class="project-desc">
+                    Functional hardware solution for household & office paper shredding.
+                </p>
+
+                <div class="tech-stack">
+                    <span>Arduino</span>
+                    <span>Electronics</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- CTA SECTION -->
+    <section class="cta-section reveal">
+        <div class="cta-card reveal-item">
+            <h2>Open for Freelance & Collaborations</h2>
+            <p>
+                Interested in AI/ML solutions, web development, or UI/UX projects?
+                I’m open to meaningful freelance work, research collaborations,
+                and innovative problem-solving opportunities.
+            </p>
+
+            <a href="#contact" class="btn primary">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+
+    <section id="contact" class="contact-section reveal">
+        <h2 class="reveal-item">Contact</h2>
+        <p class="contact-subtitle reveal-item">
+            Let’s connect and build something meaningful together.
+        </p>
+
+        <div class="contact-card reveal-item">
+            <form id="contact-form">
+
+                <div class="input-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="input-group">
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn primary" id="submit-btn">
+                    Send Message
+                </button>
+
+                <!-- Status Message -->
+                <p id="form-status" class="form-status"></p>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+                <h3>Shlok Ravi Noval</h3>
+                <p>AI/ML Developer · Building intelligent systems for real-world impact.</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="footer-social">
+
+                <a href="https://github.com/ShlokNoval" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+
+                <a href="https://www.linkedin.com/in/shlok-noval" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+
+                <a href="mailto:shloktechnical@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 Shlok Ravi Noval. All Rights Reserved.
+        </div>
+
+    </footer>
+
+    <!-- JS FILES (ALWAYS AT BOTTOM) -->
+
+    <script src="{{ url_for('static', filename='js/dna.js') }}"></script>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+        (function () {
+            emailjs.init("8UjPM87z8yYEmYYsq");
+        })();
+    </script>
+
+    <script src="{{ url_for('static', filename='js/email.js') }}"></script>
+
+
+</body>
+
+</html>
