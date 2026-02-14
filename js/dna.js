@@ -34,7 +34,10 @@ function animateDNA(timestamp) {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const centerX = canvas.width * 0.7;
+        const centerX = window.innerWidth < 768
+            ? canvas.width * 0.5
+            : canvas.width * 0.7;
+
         const spacing = 20;
         const radius = 140;
 
@@ -179,22 +182,52 @@ sections.forEach(section => sectionObserver.observe(section));
 /* TAGLINE TYPING ANIMATION */
 /* ============================= */
 
-const taglineText = "Building intelligent systems to solve real-world problems.";
+/* ===== ROTATING TAGLINE TYPING ANIMATION ===== */
+
 const taglineElement = document.getElementById("typing-tagline");
 
-let taglineIndex = 0;
+const taglines = [
+    "Building intelligent systems to solve real-world problems.",
+    "🏆 4X Hackathon Winner",
+    "Ex-Intern @IIT Hyderabad"
+];
 
-function typeTagline() {
-    if (taglineIndex < taglineText.length) {
-        taglineElement.innerHTML += taglineText.charAt(taglineIndex);
-        taglineIndex++;
-        setTimeout(typeTagline, 40);
+let taglineIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeEffect() {
+
+    const currentText = taglines[taglineIndex];
+
+    if (!isDeleting) {
+        // Typing
+        taglineElement.innerHTML = currentText.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentText.length) {
+            setTimeout(() => isDeleting = true, 1500);
+        }
+
+    } else {
+        // Deleting
+        taglineElement.innerHTML = currentText.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+            isDeleting = false;
+            taglineIndex = (taglineIndex + 1) % taglines.length;
+        }
     }
+
+    const speed = isDeleting ? 30 : 50;
+    setTimeout(typeEffect, speed);
 }
 
 window.addEventListener("load", () => {
-    setTimeout(typeTagline, 600);
+    setTimeout(typeEffect, 800);
 });
+
 
 
 /* ============================= */
@@ -340,3 +373,29 @@ if (window.innerWidth > 992) {
         heroContent.style.transform = "translate(0,0)";
     });
 }
+
+
+/* ================= MOBILE NAV TOGGLE ================= */
+
+const hamburger = document.getElementById("hamburger");
+const mobileNavMenu = document.querySelector("nav ul");
+
+if (hamburger && mobileNavMenu) {
+    hamburger.addEventListener("click", () => {
+        mobileNavMenu.classList.toggle("active");
+    });
+}
+
+/* Close mobile menu when link clicked */
+
+const mobileNavLinks = document.querySelectorAll("nav ul li a");
+
+mobileNavLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        if (mobileNavMenu) {
+            mobileNavMenu.classList.remove("active");
+        }
+    });
+});
+
+

@@ -1,3 +1,17 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+/* Prevent horizontal overflow everywhere */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 /* ===== RESET & BASE ===== */
 * {
     margin: 0;
@@ -18,13 +32,15 @@ body {
         #0b0b0d;
 
     color: #fff;
-    overflow-x: hidden;
+
     scroll-behavior: smooth;
+    overflow-x: hidden;
+
 }
 
 .hero {
 
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -667,13 +683,16 @@ nav ul li a.active::after {
     padding: 120px 10%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .cta-card {
-    max-width: 900px;
+    max-width: 600px;
     width: 100%;
+    margin: 0 auto;
     text-align: center;
-    padding: 60px 40px;
+    padding: 40px 30px;
     background: rgba(255, 255, 255, 0.06);
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -683,13 +702,28 @@ nav ul li a.active::after {
 .cta-card h2 {
     font-size: 38px;
     margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 .cta-card p {
     color: #cfcfcf;
-    max-width: 700px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 30px auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .cta-card {
+        padding: 35px 20px;
+    }
+
+    .cta-card h2 {
+        font-size: 26px;
+    }
+
+    .cta-card p {
+        font-size: 15px;
+    }
 }
 
 /* ===== CONTACT SECTION ===== */
@@ -842,6 +876,7 @@ nav ul li a.active::after {
     color: #aaa;
     font-size: 20px;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .social-links a:hover {
@@ -1061,6 +1096,7 @@ section {
     background: #0a0a0c;
     border-top: 1px solid rgba(255, 122, 24, 0.15);
     position: relative;
+    overflow: hidden;
 }
 
 .footer::before {
@@ -1147,4 +1183,194 @@ section {
 .cursor-dot,
 .cursor-outline {
     pointer-events: none;
+}
+
+@media (max-width: 992px) {
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none !important;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        /* ✅ ensure center alignment */
+        gap: 40px;
+    }
+
+    .hero-image {
+        display: flex;
+        /* ✅ added */
+        justify-content: center;
+        /* ✅ added */
+        width: 100%;
+        /* ✅ added */
+    }
+
+    .hero-image img {
+        width: 85%;
+        max-width: 320px;
+        height: auto;
+        margin: 0 auto;
+        /* ✅ ensures perfect centering */
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 28px;
+        line-height: 1.3;
+    }
+
+    .tagline {
+        font-size: 16px;
+    }
+
+}
+
+/* ================= MOBILE NAV ================= */
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.menu-toggle span {
+    width: 26px;
+    height: 3px;
+    background: #ff7a18;
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+/* Hide nav links on mobile */
+@media (max-width: 992px) {
+
+    nav {
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background: rgba(10, 10, 15, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: right 0.4s ease;
+    }
+
+    nav ul.active {
+        right: 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+}
+
+/* ================= HAMBURGER ================= */
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ff7a18;
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+/* Mobile Nav */
+@media (max-width: 768px) {
+
+    .hamburger {
+        display: flex;
+    }
+
+    nav ul {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background: #0b0b0d;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        display: none;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    .experience-section {
+        overflow-x: hidden;
+    }
+
+    .experience-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .experience-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .experience-card ul {
+        padding-left: 18px;
+    }
+
+}
+
+/* Prevent mobile overflow */
+.experience-card,
+.project-card,
+.skill-card {
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+/* Ensure pills wrap */
+.tech-stack,
+.skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Force safe width */
+@media (max-width: 768px) {
+
+    .experience-card,
+    .project-card,
+    .skill-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
 }
