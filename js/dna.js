@@ -38,7 +38,7 @@ function animateDNA(timestamp) {
             ? canvas.width * 0.5
             : canvas.width * 0.7;
 
-        const spacing = 20;
+        const spacing = window.innerWidth < 1400 ? 28 : 20;
         const radius = 140;
 
         for (let y = 0; y < canvas.height; y += spacing) {
@@ -77,9 +77,26 @@ function animateDNA(timestamp) {
 }
 
 /* Start DNA only on larger screens */
-if (window.innerWidth > 768) {
+/* ============================= */
+/* SMART DNA CONTROL */
+/* ============================= */
+
+let dnaEnabled = window.innerWidth > 992; // disable on mobile & tablets
+
+if (dnaEnabled) {
     requestAnimationFrame(animateDNA);
 }
+
+/* Pause animation when tab inactive */
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        dnaEnabled = false;
+    } else if (window.innerWidth > 992) {
+        dnaEnabled = true;
+        requestAnimationFrame(animateDNA);
+    }
+});
+
 
 
 /* ============================= */
@@ -179,10 +196,8 @@ sections.forEach(section => sectionObserver.observe(section));
 
 
 /* ============================= */
-/* TAGLINE TYPING ANIMATION */
+/* OPTIMIZED ROTATING TAGLINE */
 /* ============================= */
-
-/* ===== ROTATING TAGLINE TYPING ANIMATION ===== */
 
 const taglineElement = document.getElementById("typing-tagline");
 
@@ -201,32 +216,27 @@ function typeEffect() {
     const currentText = taglines[taglineIndex];
 
     if (!isDeleting) {
-        // Typing
-        taglineElement.innerHTML = currentText.substring(0, charIndex + 1);
-        charIndex++;
-
+        taglineElement.textContent = currentText.slice(0, ++charIndex);
         if (charIndex === currentText.length) {
-            setTimeout(() => isDeleting = true, 1500);
+            setTimeout(() => isDeleting = true, 1200);
         }
-
     } else {
-        // Deleting
-        taglineElement.innerHTML = currentText.substring(0, charIndex - 1);
-        charIndex--;
-
+        taglineElement.textContent = currentText.slice(0, --charIndex);
         if (charIndex === 0) {
             isDeleting = false;
             taglineIndex = (taglineIndex + 1) % taglines.length;
         }
     }
 
-    const speed = isDeleting ? 30 : 50;
-    setTimeout(typeEffect, speed);
+    const delay = isDeleting ? 25 : 40;
+    setTimeout(typeEffect, delay);
 }
 
 window.addEventListener("load", () => {
-    setTimeout(typeEffect, 800);
+    setTimeout(typeEffect, 600);
 });
+
+
 
 
 
@@ -273,7 +283,10 @@ function animateCursor() {
 
     requestAnimationFrame(animateCursor);
 }
-animateCursor();
+if (window.innerWidth > 992) {
+    animateCursor();
+}
+
 
 const hoverElements = document.querySelectorAll("a, button, .project-card");
 

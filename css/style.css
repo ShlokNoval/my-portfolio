@@ -1374,3 +1374,24 @@ section {
     }
 
 }
+
+/* ============================= */
+/* MOBILE PERFORMANCE MODE */
+/* ============================= */
+
+@media (max-width: 992px) {
+
+    .hero::before,
+    .hero::after {
+        display: none !important;
+    }
+
+    .project-card {
+        transform: none !important;
+    }
+
+    .project-card:hover {
+        transform: none !important;
+    }
+
+}
