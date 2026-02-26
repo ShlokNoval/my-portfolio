@@ -203,7 +203,7 @@ const taglineElement = document.getElementById("typing-tagline");
 
 const taglines = [
     "Building intelligent systems to solve real-world problems.",
-    "🏆 4X Hackathon Winner",
+    "🏆 5X Hackathon Winner",
     "Ex-Intern @IIT Hyderabad"
 ];
 
