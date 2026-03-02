@@ -153,10 +153,11 @@ document.querySelectorAll("a[href^='#']").forEach(anchor => {
 
             if (targetSection) {
 
-                targetSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+                if (typeof lenis !== 'undefined') {
+                    lenis.scrollTo(targetSection);
+                } else {
+                    targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
 
                 /* 🔥 Immediately update active nav */
                 document.querySelectorAll("nav a").forEach(link => {
