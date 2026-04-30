@@ -825,60 +825,128 @@ nav ul li a.active::after {
     pointer-events: none;
 }
 
-/* ===== SCROLL REVEAL ===== */
-/* ===== SAFE SCROLL REVEAL ===== */
+/* ===== SCROLL REVEAL SYSTEM ===== */
+
+/* Base reveal: fade + slide up */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-/* ============================= */
-/* STAGGERED CHILD ANIMATION */
-/* ============================= */
-
-.reveal .reveal-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.show .reveal-item {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Stagger delay */
-.reveal.show .reveal-item:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.reveal.show .reveal-item:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.reveal.show .reveal-item:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.reveal.show .reveal-item:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.reveal.show .reveal-item:nth-child(5) {
-    transition-delay: 0.5s;
-}
-
-
-.reveal.hidden {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
+    transform: translateY(50px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.show {
     opacity: 1;
+    transform: translateY(0) !important;
+}
+
+/* Directional variants */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-blur {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.show,
+.reveal-right.show,
+.reveal-scale.show {
+    opacity: 1;
+    transform: none !important;
+}
+
+.reveal-blur.show {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0) !important;
+}
+
+/* Hidden state */
+.reveal.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* ============================= */
+/* STAGGERED CHILD ANIMATION     */
+/* ============================= */
+
+.reveal .reveal-item,
+.reveal-left .reveal-item,
+.reveal-right .reveal-item,
+.reveal-scale .reveal-item,
+.reveal-blur .reveal-item {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.show .reveal-item,
+.reveal-left.show .reveal-item,
+.reveal-right.show .reveal-item,
+.reveal-scale.show .reveal-item,
+.reveal-blur.show .reveal-item {
+    opacity: 1;
     transform: translateY(0);
+}
+
+/* Stagger delays using nth-child */
+.show .reveal-item:nth-child(1) { transition-delay: 0.05s; }
+.show .reveal-item:nth-child(2) { transition-delay: 0.12s; }
+.show .reveal-item:nth-child(3) { transition-delay: 0.2s; }
+.show .reveal-item:nth-child(4) { transition-delay: 0.28s; }
+.show .reveal-item:nth-child(5) { transition-delay: 0.36s; }
+
+/* ============================= */
+/* STAGGERED CARD GRID ANIMATION */
+/* ============================= */
+
+/* Cards within grids animate individually with stagger */
+.stagger-card {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Delay is set via CSS custom property by JS */
+    transition-delay: var(--stagger-delay, 0s);
+}
+
+.stagger-card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ============================= */
+/* SECTION HEADING PARALLAX      */
+/* ============================= */
+
+.parallax-heading {
+    transition: transform 0.1s linear;
+    will-change: transform;
 }
 
 /* ===== HERO ACTIONS ===== */

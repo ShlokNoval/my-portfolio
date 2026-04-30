@@ -100,25 +100,100 @@ document.addEventListener("visibilitychange", () => {
 
 
 /* ============================= */
-/* SCROLL REVEAL */
+/* SCROLL ANIMATION SYSTEM       */
 /* ============================= */
 
-const revealElements = document.querySelectorAll(".reveal");
+// 1. Basic reveal observer for sections
+const revealElements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur"
+);
 
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add("show");
-            observer.unobserve(entry.target); // animate only once
+            revealObserver.unobserve(entry.target);
         }
     });
 }, {
-    threshold: 0.1
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
 });
 
-revealElements.forEach(el => {
-    observer.observe(el);
-});
+revealElements.forEach(el => revealObserver.observe(el));
+
+// 2. Stagger cards: project-card, skill-card, experience-card, timeline-item
+function setupStaggerCards() {
+    const grids = document.querySelectorAll(
+        '.projects-grid, .skills-grid, .experience-cards, .timeline'
+    );
+
+    grids.forEach(grid => {
+        const cards = grid.querySelectorAll(
+            '.project-card, .skill-card, .experience-card, .timeline-item'
+        );
+
+        cards.forEach((card, i) => {
+            card.classList.add('stagger-card');
+            card.style.setProperty('--stagger-delay', `${i * 0.08}s`);
+        });
+
+        const gridObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Reveal all child cards
+                    const children = entry.target.querySelectorAll('.stagger-card');
+                    children.forEach(child => child.classList.add('show'));
+                    gridObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.05,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        gridObserver.observe(grid);
+    });
+}
+
+setupStaggerCards();
+
+// 3. Parallax section headings (subtle upward drift on scroll)
+function setupParallax() {
+    const headings = document.querySelectorAll(
+        '.about-section h2, .education-section h2, .experience-section h2, ' +
+        '.skills-section h2, .projects-section h2, .contact-section h2'
+    );
+
+    headings.forEach(h => h.classList.add('parallax-heading'));
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                headings.forEach(h => {
+                    const rect = h.getBoundingClientRect();
+                    const viewH = window.innerHeight;
+                    // Only apply when heading is in viewport
+                    if (rect.top < viewH && rect.bottom > 0) {
+                        // Subtle float: -15px to +15px based on position
+                        const center = viewH / 2;
+                        const offset = (rect.top - center) / center;
+                        h.style.transform = `translateY(${offset * -12}px)`;
+                    }
+                });
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+// Only on desktop for performance
+if (window.innerWidth > 992) {
+    setupParallax();
+}
+
 
 
 /* ============================= */
@@ -204,7 +279,7 @@ const taglineElement = document.getElementById("typing-tagline");
 
 const taglines = [
     "Building intelligent systems to solve real-world problems.",
-    "🏆 5X Hackathon Winner",
+    "🏆 6X Hackathon Winner",
     "Ex-Intern @IIT Hyderabad"
 ];
 
