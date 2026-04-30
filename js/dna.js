@@ -116,8 +116,8 @@ const revealObserver = new IntersectionObserver((entries) => {
         }
     });
 }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px 50px 0px'
 });
 
 revealElements.forEach(el => revealObserver.observe(el));
@@ -148,8 +148,8 @@ function setupStaggerCards() {
                 }
             });
         }, {
-            threshold: 0.05,
-            rootMargin: '0px 0px -30px 0px'
+            threshold: 0.02,
+            rootMargin: '0px 0px 50px 0px'
         });
 
         gridObserver.observe(grid);
