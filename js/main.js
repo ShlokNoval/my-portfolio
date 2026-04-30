@@ -74,123 +74,183 @@ if (window.matchMedia("(pointer: fine)").matches) {
 }
 
 /* ============================= */
-/* CINEMATIC PORTAL ANIMATION */
+/* CINEMATIC PORTAL ANIMATION    */
 /* ============================= */
-document.addEventListener("DOMContentLoaded", () => {
+(function() {
     const portalWrapper = document.getElementById('portal-wrapper');
     const maskGroup = document.getElementById('mask-group');
     const introUi = document.getElementById('intro-ui');
     const progressBar = document.getElementById('portal-progress-bar');
-    const mainContent = document.getElementById('main-content');
-    const mistyCard = document.querySelector('.misty-card');
-    
+
     if (!portalWrapper || !maskGroup) return;
 
-    let portalProgress = 0;
+    let portalProgress = 0;       // raw accumulated progress (0-1)
+    let smoothProgress = 0;       // smoothed/lerped progress for rendering
     let isAutoAdvancing = false;
     let portalComplete = false;
+    let animating = false;
 
-    // Stop Lenis initially so user can't scroll past the portal
-    if (typeof lenis !== 'undefined') {
+    // Disable body scroll during portal
+    document.body.style.overflow = 'hidden';
+
+    // Stop Lenis initially
+    if (typeof lenis !== 'undefined' && lenis) {
         lenis.stop();
     }
 
-    // Cubic easing function
-    function easeInOutCubic(x) {
-        return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    // Cinematic cubic-bezier easing: heavy feel
+    function cinematicEase(t) {
+        // Attempt to mimic cubic-bezier(0.77, 0, 0.175, 1) 
+        if (t <= 0) return 0;
+        if (t >= 1) return 1;
+        // Approximation using a quintic
+        return t < 0.5
+            ? 16 * t * t * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 5) / 2;
     }
 
-    function updatePortal() {
-        if (portalProgress > 1) portalProgress = 1;
-        if (portalProgress < 0) portalProgress = 0;
+    function render() {
+        if (portalComplete) return;
 
-        // Exponential scale from 1 to 220
-        // We use easing for the visual effect
-        let easedProgress = easeInOutCubic(portalProgress);
+        // Smooth interpolation (lerp) for buttery animation
+        smoothProgress += (portalProgress - smoothProgress) * 0.08;
+
+        // Clamp
+        if (smoothProgress > 0.999) smoothProgress = 1;
+        if (smoothProgress < 0) smoothProgress = 0;
+
+        let easedProgress = cinematicEase(smoothProgress);
+
+        // Scale from 1 to 220
         let scale = 1 + (easedProgress * 219);
-        
-        maskGroup.style.transform = `scale(${scale})`;
-        progressBar.style.width = `${portalProgress * 100}%`;
 
-        // Intro UI fade and translate
-        if (portalProgress < 0.2) {
-            let uiOpacity = 1 - (portalProgress / 0.2);
-            let uiY = -(portalProgress / 0.2) * 60;
-            introUi.style.opacity = uiOpacity;
-            introUi.style.transform = `translateX(-50%) translateY(${uiY}px)`;
-            introUi.style.pointerEvents = 'none';
-        } else {
-            introUi.style.opacity = 0;
+        // Use setAttribute for smooth SVG transforms
+        maskGroup.setAttribute('transform', 
+            `translate(50, 52) scale(${scale}) translate(-50, -52)`
+        );
+
+        // Progress bar
+        if (progressBar) {
+            progressBar.style.width = `${smoothProgress * 100}%`;
         }
 
-        // Curtain fade out after 85%
-        if (portalProgress > 0.85) {
-            let fadeProgress = (portalProgress - 0.85) / 0.15;
-            portalWrapper.style.opacity = 1 - fadeProgress;
-        } else {
-            portalWrapper.style.opacity = 1;
+        // Intro UI fade + translate upwards
+        if (introUi) {
+            if (smoothProgress < 0.2) {
+                let uiFade = 1 - (smoothProgress / 0.2);
+                let uiShift = -(smoothProgress / 0.2) * 60;
+                introUi.style.opacity = uiFade;
+                introUi.style.transform = `translateX(-50%) translateY(${uiShift}px)`;
+            } else {
+                introUi.style.opacity = '0';
+                introUi.style.transform = 'translateX(-50%) translateY(-60px)';
+            }
         }
 
-        // Auto advance if > 30%
-        if (portalProgress > 0.3 && !isAutoAdvancing && !portalComplete) {
-            isAutoAdvancing = true;
-            autoAdvance();
+        // Fade out the whole curtain after 80%
+        if (smoothProgress > 0.8) {
+            let fadeAmt = (smoothProgress - 0.8) / 0.2;
+            portalWrapper.style.opacity = 1 - fadeAmt;
+        } else {
+            portalWrapper.style.opacity = '1';
         }
 
         // Complete
-        if (portalProgress === 1 && !portalComplete) {
-            portalComplete = true;
+        if (smoothProgress >= 0.999) {
+            completePortal();
+            return;
+        }
+
+        requestAnimationFrame(render);
+    }
+
+    function startRenderLoop() {
+        if (!animating) {
+            animating = true;
+            requestAnimationFrame(render);
+        }
+    }
+
+    function completePortal() {
+        portalComplete = true;
+        portalWrapper.style.opacity = '0';
+        
+        setTimeout(() => {
             portalWrapper.style.display = 'none';
-            mainContent.classList.remove('locked');
-            if (mistyCard) {
-                mistyCard.classList.add('revealed');
-            }
-            if (typeof lenis !== 'undefined') {
+            document.body.style.overflow = '';
+            
+            if (typeof lenis !== 'undefined' && lenis) {
                 lenis.start();
             }
-        }
+        }, 300);
     }
 
+    // Auto-advance: smoothly animate from current to 1.0
     function autoAdvance() {
-        if (portalProgress < 1) {
-            portalProgress += 0.015; // roughly 3-4 seconds to reach 1 at 60fps
-            updatePortal();
-            requestAnimationFrame(autoAdvance);
+        if (portalComplete) return;
+        isAutoAdvancing = true;
+
+        function tick() {
+            if (portalProgress < 1) {
+                portalProgress += 0.008; // ~4 seconds from 0.3 to 1.0
+                if (portalProgress > 1) portalProgress = 1;
+                requestAnimationFrame(tick);
+            }
         }
+        tick();
     }
 
+    // Wheel handler
     window.addEventListener('wheel', (e) => {
         if (portalComplete || isAutoAdvancing) return;
+        e.preventDefault();
+
+        // Normalize delta
+        let delta = e.deltaY;
+        let normalized = Math.sign(delta) * Math.min(Math.abs(delta), 100) / 100;
+        portalProgress += normalized * 0.04;
         
-        // Increase progress based on wheel delta
-        // Sensitivity might need tuning
-        if (e.deltaY > 0) {
-            portalProgress += 0.02;
-        } else {
-            portalProgress -= 0.02;
+        if (portalProgress < 0) portalProgress = 0;
+        if (portalProgress > 1) portalProgress = 1;
+
+        startRenderLoop();
+
+        // Auto advance trigger at 30%
+        if (portalProgress > 0.3 && !isAutoAdvancing) {
+            autoAdvance();
         }
-        
-        updatePortal();
     }, { passive: false });
 
-    // Handle touch for mobile
+    // Touch handlers for mobile
     let touchStartY = 0;
+    let lastTouchY = 0;
+
     window.addEventListener('touchstart', (e) => {
+        if (portalComplete || isAutoAdvancing) return;
         touchStartY = e.touches[0].clientY;
-    }, { passive: false });
+        lastTouchY = touchStartY;
+    }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
         if (portalComplete || isAutoAdvancing) return;
-        let touchEndY = e.touches[0].clientY;
-        let deltaY = touchStartY - touchEndY;
-        
-        if (deltaY > 10) {
-            portalProgress += 0.03;
-            touchStartY = touchEndY;
-        } else if (deltaY < -10) {
-            portalProgress -= 0.03;
-            touchStartY = touchEndY;
+        e.preventDefault();
+
+        let currentY = e.touches[0].clientY;
+        let delta = lastTouchY - currentY;
+        lastTouchY = currentY;
+
+        portalProgress += delta * 0.002;
+        if (portalProgress < 0) portalProgress = 0;
+        if (portalProgress > 1) portalProgress = 1;
+
+        startRenderLoop();
+
+        if (portalProgress > 0.3 && !isAutoAdvancing) {
+            autoAdvance();
         }
-        updatePortal();
     }, { passive: false });
-});
+
+    // Start the render loop immediately
+    startRenderLoop();
+})();
+
